@@ -3,6 +3,7 @@ This project shows similarity in the dictionaries of users_behaviors file
 
 # Goal
 1. Create file with this structure
+```
 [
 {
 		“userId”: 12345,
@@ -13,6 +14,7 @@ This project shows similarity in the dictionaries of users_behaviors file
 		“wordsList”: [“Insect”, “Bacon”, ”Noodles”, “Boots”]
 }
 ]
+```
 
 2. Use jaccard or other method to find similarity in users dictionaries
 
