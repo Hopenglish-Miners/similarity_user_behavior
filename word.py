@@ -1,8 +1,13 @@
 import json
 
-def generateWords(stu, final):
+def generateWords(stu, final, users):
     for i in range(0, len(stu)):
         wordlist = []
+        # duplicated users
+        if stu[i]['memberId'] in users:
+            continue;
+        else:
+            users.append(stu[i]['memberId'])
         for v in stu[i]['vocabularyList']:
             w = v['word']
             # remove white space of the word
@@ -18,22 +23,30 @@ def generateWords(stu, final):
         }
         final.append(user)
 
-openfile = open('studentBehaviorInfo_1.json')
-writefile = open('dictionary.json', 'w')
 
-students = json.load(openfile)
+writefile = open('dictionary.json', 'w')
 final = []
-generateWords(students, final)
+# check duplicated users
+users =[]
+
+openfile = open('studentBehaviorInfo_1.json')
+students = json.load(openfile)
+generateWords(students, final, users)
 openfile.close()
 
 openfile = open('studentBehaviorInfo_2.json')
 students = json.load(openfile)
-generateWords(students, final)
+generateWords(students, final, users)
+openfile.close()
+
+
+openfile = open('studentBehaviorInfoOver40Class_1213.json')
+students = json.load(openfile)
+generateWords(students, final, users)
 openfile.close()
 
 # print final
+# print len(users)
 json.dump(final, writefile)
 writefile.close()
 
-
-    
