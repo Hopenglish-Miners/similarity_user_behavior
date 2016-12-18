@@ -17,6 +17,7 @@ This project shows similarity in the dictionaries of users_behaviors file
 ```
 
 Jaccard structure:
+```
 {
  "memberId":{"memberId":"Jaccard_score", "memberId":"Jaccard_score",...,"memberId":"Jaccard_score"}
  "memberId":{"memberId":"Jaccard_score", "memberId":"Jaccard_score",...,"memberId":"Jaccard_score"}
@@ -24,13 +25,13 @@ Jaccard structure:
 
 example:
 {
- "1"{"2":"0.253", "3":"0.023",...,"6532":"0.025"}
+ "1":{"2":"0.253", "3":"0.023",...,"6532":"0.025"}
  .
  . 
  .
  "6532":{"1":"0.053", "2":"0.013",...,"6532":"1"}
 }
-
+```
 
 
 2. Use jaccard or other method to find similarity in users dictionaries
