@@ -3,13 +3,17 @@ import json
 def generateWords(stu, final, users):
     for i in range(0, len(stu)):
         wordlist = []
-        # duplicated users
         if stu[i]['memberId'] in users:
-            continue;
+            # duplicated users
+            continue
         else:
             users.append(stu[i]['memberId'])
         for v in stu[i]['vocabularyList']:
             w = v['word']
+            postid = v['postId']
+            # remove video 3913
+            if postid == '3913':
+                continue
             # remove white space of the word
             w = w.strip()
             if w in wordlist:
@@ -49,4 +53,3 @@ openfile.close()
 # print len(users)
 json.dump(final, writefile)
 writefile.close()
-
