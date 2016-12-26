@@ -1,13 +1,22 @@
 import json
+import nltk
+from nltk import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+
+wordnet_lemmatizer = WordNetLemmatizer()
+stop = stopwords.words('english')
 
 def generateWords(stu, final, users):
     for i in range(0, len(stu)):
-        wordlist = []
-        if stu[i]['memberId'] in users:
+        wordlist = {}
+        duplicated = []
+        memberid = stu[i]['memberId']
+        if memberid in users:
             # duplicated users
             continue
         else:
-            users.append(stu[i]['memberId'])
+            users.append(memberid)
         for v in stu[i]['vocabularyList']:
             w = v['word']
             postid = v['postId']
@@ -16,19 +25,34 @@ def generateWords(stu, final, users):
                 continue
             # remove white space of the word
             w = w.strip()
-            if w in wordlist:
+            if not w.isalpha():
+                continue
+            # stop words
+            if w in stop:
+                continue
+            # lemma
+            f1 = wordnet_lemmatizer.lemmatize(w)
+            w = wordnet_lemmatizer.lemmatize(f1, pos='v')
+            
+            if w in duplicated:
                 # duplicated vocabulary
                 continue
             else:
-                wordlist.append(w)
+                if wordlist.has_key(postid):
+                    wordlist[postid].append(w)
+                else:
+                    # wordlist['5797'] = ['book']
+                    wordlist[postid] = [w]
+                duplicated.append(w)
+        
         user = {
-            'memberId' : stu[i]['memberId'],
+            'memberId' : memberid,
             'wordList' : wordlist
         }
         final.append(user)
 
 
-writefile = open('dictionary.json', 'w')
+writefile = open('student_filteredWords.json', 'w')
 final = []
 # check duplicated users
 users =[]
